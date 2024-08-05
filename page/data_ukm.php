@@ -17,7 +17,7 @@ if ($_GET['status'] == 'dec') {
 }
 
 // Mengambil data dari tabel data_ukm
-$sql = "SELECT id, nama_barang, tanggal, harga, diskon, ppn, total_harga FROM data_ukm";
+$sql = "SELECT * FROM data_ukm";
 $result = $conn->query($sql);
 ?>
 
@@ -36,7 +36,7 @@ $result = $conn->query($sql);
 </style>
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
-        <div class="col-12 col-sm-8">
+        <div class="col-12 col-sm-10 col-md-8">
             <div class="bg-light rounded h-100 p-4">
                 <h6 class="mb-3">Data UKM</h6>
                 <?php if ($_GET['status'] == 'enc') { ?>
@@ -56,6 +56,8 @@ $result = $conn->query($sql);
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
+                                <th scope="col">Nomor Faktur</th>
+                                <th scope="col">Nama Pelanggan</th>
                                 <th scope="col">Nama Barang</th>
                                 <th scope="col">Tanggal</th>
                                 <th scope="col">Harga</th>
@@ -69,6 +71,8 @@ $result = $conn->query($sql);
                             <?php while ($row = $result->fetch_assoc()) : ?>
                                 <tr>
                                     <th scope="row"><?= $no++; ?></th>
+                                    <td><?= $decrypt ? decryptAES128($row['no_faktur'], getCurrentKey()) : $row['no_faktur']; ?></td>
+                                    <td><?= $decrypt ? decryptAES128($row['nama_customer'], getCurrentKey()) : $row['nama_customer']; ?></td>
                                     <td><?= $decrypt ? decryptAES128($row['nama_barang'], getCurrentKey()) : $row['nama_barang']; ?></td>
                                     <td><?= $decrypt ? decryptAES128($row['tanggal'], getCurrentKey()) : $row['tanggal']; ?></td>
                                     <td>Rp<?= $decrypt ? number_format(decryptAES128($row['harga'], getCurrentKey()), 2, ',', '.') : $row['harga']; ?></td>

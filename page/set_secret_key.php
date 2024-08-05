@@ -74,7 +74,7 @@ $conn->close();
 <!-- Form Start -->
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
-        <div class="col-12 col-sm-8 col-md-6">
+        <div class="col-12 col-sm-10 col-md-8">
             <div class="bg-light rounded h-100 p-4">
                 <h6 class="mb-4">Edit Secret Key</h6>
                 <form action="" method="post" onsubmit="return validateKeyLength()">

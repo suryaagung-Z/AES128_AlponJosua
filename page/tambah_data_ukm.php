@@ -3,6 +3,8 @@ if (isset($_POST['submit_add_data'])) {
     $res_key = getCurrentKey();
 
     // Mendapatkan data dari form
+    $no_faktur = $_POST['no_faktur'];
+    $nama_customer = $_POST['nama_customer'];
     $nama_barang = $_POST['nama_barang'];
     $tanggal = $_POST['tanggal'];
     $harga = $_POST['harga'];
@@ -14,6 +16,8 @@ if (isset($_POST['submit_add_data'])) {
     $total_harga = $harga_setelah_diskon + $ppn;
 
     // Menyimpan data ke dalam tabel data_ukm
+    $no_faktur = encryptAES128($no_faktur, $res_key);
+    $nama_customer = encryptAES128($nama_customer, $res_key);
     $nama_barang = encryptAES128($nama_barang, $res_key);
     $tanggal = encryptAES128($tanggal, $res_key);
     $harga = encryptAES128($harga, $res_key);
@@ -21,7 +25,9 @@ if (isset($_POST['submit_add_data'])) {
     $ppn = encryptAES128($ppn, $res_key);
     $total_harga = encryptAES128($total_harga, $res_key);
 
-    $sql = "INSERT INTO data_ukm (nama_barang, tanggal, harga, diskon, ppn, total_harga) VALUES ('$nama_barang', '$tanggal', '$harga', '$diskon', '$ppn', '$total_harga')";
+    $sql = "INSERT INTO data_ukm 
+                (no_faktur, nama_customer, nama_barang, tanggal, harga, diskon, ppn, total_harga) 
+                VALUES ('$no_faktur', '$nama_customer', '$nama_barang', '$tanggal', '$harga', '$diskon', '$ppn', '$total_harga')";
     if ($conn->query($sql) === TRUE) {
         echo "<script>alert('Data berhasil ditambahkan');</script>";
     } else {
@@ -38,6 +44,14 @@ if (isset($_POST['submit_add_data'])) {
             <div class="bg-light rounded h-100 p-4">
                 <h6 class="mb-4">Tambah Data UKM</h6>
                 <form action="" method="post">
+                    <div class="mb-3">
+                        <label for="no_faktur" class="form-label">Nomor Faktur</label>
+                        <input type="text" class="form-control" id="no_faktur" name="no_faktur" placeholder="Nomor Faktur" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nama_customer" class="form-label">Nama Pelanggan</label>
+                        <input type="text" class="form-control" id="nama_customer" name="nama_customer" placeholder="Nama Pelanggan" required>
+                    </div>
                     <div class="mb-3">
                         <label for="namabarang" class="form-label">Nama Barang</label>
                         <input type="text" class="form-control" id="namabarang" name="nama_barang" placeholder="Nama Barang" required>
