@@ -2,8 +2,8 @@
 // Menghubungkan ke database MySQL
 $servername = "localhost";
 $username = "root";
-$dbpassword = "sury44gung";
-$dbname = "aes128_alpon_josua";
+$dbpassword = "";
+$dbname = "aes128";
 
 $conn = new mysqli($servername, $username, $dbpassword, $dbname);
 
